@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+   
+   <bean id="applicationConsole" 
+      class="kkdt.sample.webboot.client.ApplicationConsole" init-method="init">
+   </bean>
+   
+   <bean id="counterModel" class="kkdt.sample.webboot.CounterModel" init-method="init">
+      <constructor-arg value="3000"/>
+   </bean>
+   
+   <bean id="applicationController" 
+      class="kkdt.sample.webboot.client.ApplicationController"/>
+   
+   <bean id="app" class="kkdt.sample.webboot.client.SampleConsole" init-method="init">
+      <property name="applicationConsole" ref="applicationConsole"/>
+      <property name="counterModel" ref="counterModel"/>
+      <property name="applicationController" ref="applicationController"/>
+   </bean>
+</beans>
