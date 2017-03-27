@@ -4,11 +4,31 @@
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
    
    <bean id="webConsole" 
-      class="kkdt.sample.webboot.http.SampleConsole" />
+      class="kkdt.sample.webboot.http.SampleConsole">
+   </bean>
    
    <bean id="counterEndpoint" 
       class="kkdt.sample.webboot.http.CounterEndpoint">
       <property name="counterModel" ref="counterModel"/>
    </bean>
    
+   <bean id="securedConfigurer" class="kkdt.sample.webboot.security.SecuredApplicationConfigurer">
+      <property name="authenticationProvider" ref="authenticationProvider"/>
+      <property name="applicationSecurityFilter" ref="applicationSecurityFilter"/>
+   </bean>
+   
+   <bean id="applicationSecurityFilter" class="kkdt.sample.webboot.security.ApplicationSecurityFilter">
+   </bean>
+   
+<!--
+   <bean class="org.springframework.boot.context.embedded.FilterRegistrationBean">
+      <property name="filter" ref="securityFilter"/>
+      <property name="order" value="0"/>
+      <property name="urlPatterns">
+         <list>
+            <value>/**</value>
+         </list>
+      </property>
+   </bean>
+-->
 </beans>

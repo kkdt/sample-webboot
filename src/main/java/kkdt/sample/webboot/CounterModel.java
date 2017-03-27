@@ -40,7 +40,7 @@ public class CounterModel extends Observable {
          @Override
          public void run() {
             counter++;
-            logger.info("Counter updated: " + counter);
+            logger.debug("Counter updated: " + counter);
             
             setChanged();
             try {

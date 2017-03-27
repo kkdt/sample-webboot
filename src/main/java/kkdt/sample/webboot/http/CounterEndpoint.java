@@ -7,6 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kkdt.sample.webboot.CounterModel;
 
+/**
+ * <p>
+ * REST endpoint that will obtain the counter value if a {@code CounterModel} is
+ * configured during instantiation.
+ * </p>
+ * 
+ * @author thinh
+ *
+ */
 @RestController
 public class CounterEndpoint {
    private static final Logger logger = Logger.getLogger(CounterEndpoint.class);

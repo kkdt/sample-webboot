@@ -5,14 +5,13 @@
    
    <bean id="applicationConsole" 
       class="kkdt.sample.webboot.client.ApplicationConsole" init-method="init">
-   </bean>
-   
-   <bean id="counterModel" class="kkdt.sample.webboot.CounterModel" init-method="init">
-      <constructor-arg value="3000"/>
+      <constructor-arg ref="applicationController"/>
    </bean>
    
    <bean id="applicationController" 
-      class="kkdt.sample.webboot.client.ApplicationController"/>
+      class="kkdt.sample.webboot.client.ApplicationController">
+      <constructor-arg ref="authenticationProvider"/>
+   </bean>
    
    <bean id="app" class="kkdt.sample.webboot.client.SampleConsole" init-method="init">
       <property name="applicationConsole" ref="applicationConsole"/>

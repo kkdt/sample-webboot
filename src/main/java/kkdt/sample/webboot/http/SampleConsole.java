@@ -6,18 +6,30 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.util.Assert;
 
+/**
+ * <p>
+ * The Spring Boot web application.
+ * </p>
+ * 
+ * @author thinh
+ *
+ */
 @SpringBootApplication
+@EnableWebSecurity
 @ImportResource({
+   // import additional resources as needed
    "classpath:webContext.xml"
 })
-public class SampleConsole implements ApplicationRunner {
+public class SampleConsole implements ApplicationRunner 
+{
    private static final Logger logger = Logger.getLogger(SampleConsole.class);
    
    @Autowired(required=true)
    private CounterEndpoint counterEndpoint;
-
+   
    @Override
    public void run(ApplicationArguments args) throws Exception {
       logger.info("(thin client) " + SampleConsole.class.getName() + " starting up"); 

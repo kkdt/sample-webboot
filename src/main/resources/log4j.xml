@@ -13,17 +13,27 @@
    
    
    <logger name="org.apache" additivity="false">
-      <level value="WARN" />
+      <level value="warn" />
       <appender-ref ref="logfile" />
    </logger>
    
    <logger name="org.springframework" additivity="false">
-      <level value="WARN" />
+      <level value="warn" />
+      <appender-ref ref="logfile" />
+   </logger>
+   
+   <logger name="kkdt.sample.webboot.CounterModel" additivity="false">
+      <level value="debug" />
+      <appender-ref ref="logfile" />
+   </logger>
+   
+   <logger name="kkdt.sample.webboot.client.ApplicationController" additivity="false">
+      <level value="debug" />
       <appender-ref ref="logfile" />
    </logger>
    
    <root>
-      <level value="INFO" />
+      <level value="info" />
       <appender-ref ref="logfile" />
    </root>
 
