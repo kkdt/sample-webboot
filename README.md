@@ -10,9 +10,11 @@ This is a prototype for integrating a Spring-based Swing application and a Sprin
 
 1. Build: `gradle cleanAll assemble`
 2. Run the program: `java -jar build/libs/sample-webboot.jar`
-3. You should see a `JFrame` popup that displays an incrementing counter model
-4. Navigate to `http://localhost:8080/counter` to get the counter model value
-5. Logs are stored in `logs/webboot.log` wherever you invoked the jar
+3. You should see a `JFrame` popup that displays an incrementing counter model once logged in
+4. Navigate to `http://localhost:8080/counter` to get the counter model value, or 401 if not logged in
+5. Log into the application via Swing using the user `admin` to get the counter value in your browser
+5. Each time you log out, the web application should pick up the logout from Swing
+6. Logs are stored in `logs/webboot.log` wherever you invoked the jar
 
 For convenience, the runnable jar is also checked into the `run` directory. Double-click it or run it via Java from command line using the snippet above.
 

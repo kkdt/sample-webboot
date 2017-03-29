@@ -17,8 +17,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 /**
+ * <p>
+ * An HTTP request filter that looks at the current {@linkplain SecurityContextHolder}
+ * and manually set the request prior to Spring Security filters. It will always
+ * return a 401 (unauthorized) if the user has not logged into the application
+ * via the Swing application.
+ * </p>
+ * 
+ * <p>
+ * Note: This may not be the right approach, need to look into
+ * <pre>
  * http://docs.spring.io/spring-security/site/docs/3.0.x/reference/security-filter-chain.html
  * org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy
+ * org.springframework.security.web.context.HttpSessionSecurityContextRepository
+ * </pre>
+ * </p>
  * 
  * @author thinh
  *
