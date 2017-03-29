@@ -12,6 +12,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
+description = 'Example application running both Swing and Spring Boot web applications'
+version = '0.1'
+
 eclipse {
    classpath {
       downloadSources=true
