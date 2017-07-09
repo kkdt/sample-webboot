@@ -9,10 +9,45 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'spring-boot'
+apply plugin: 'application'
 
 description = 'Example application running both Swing and Spring Boot web applications'
 version = '0.2'
+
+// main application
+mainClassName = "kkdt.sample.webboot.SampleWebBoot"
+applicationDefaultJvmArgs = ["-Dapp=SampleWebBoot"]
+
+// override application plugin task (type = Sync) to not include the project name 
+// as the root directory
+installDist {
+   into new File(project.buildDir, 'install')
+}
+
+// https://discuss.gradle.org/t/customize-the-root-folder-of-an-archive-created-by-the-distribution-plugin/6912/5
+// (You can't override to change the root path)
+distTar {
+   println '(tar)archiveName: ' + archiveName
+   println '(tar)archivePath: ' + archivePath
+   println '(tar)destinationDir: ' + destinationDir
+   println '(tar)baseName: ' + baseName
+   println '(tar)appendix: ' + appendix
+   println '(tar)version: ' + version
+   println '(tar)classifier: ' + classifier
+   println '(tar)extension: ' + extension
+   println '(tar)[baseName]-[appendix]-[version]-[classifier].[extension]'
+}
+distZip {
+   println '(zip)archiveName: ' + archiveName
+   println '(zip)archivePath: ' + archivePath
+   println '(zip)destinationDir: ' + destinationDir
+   println '(zip)baseName: ' + baseName
+   println '(zip)appendix: ' + appendix
+   println '(zip)version: ' + version
+   println '(zip)classifier: ' + classifier
+   println '(zip)extension: ' + extension
+   println '(zip)[baseName]-[appendix]-[version]-[classifier].[extension]'
+}
 
 eclipse {
    classpath {
@@ -74,5 +109,62 @@ task cleanAll(description: 'Clean all generated artifacts', dependsOn:['clean'])
    doLast {
       delete 'logs'
    }
+}
+
+task createHelloWorld(type: CreateStartScripts) {
+   mainClassName = "kkdt.sample.webboot.HelloWorld"
+   applicationName = "helloworld"
+   defaultJvmOpts = ["-Dhello=world"]
+   outputDir = new File(project.buildDir, 'scripts')
+   classpath = jar.outputs.files + project.configurations.runtime
+   doLast {
+      windowsScript.delete()
+   }
+}
+
+task createCurrentTime(type: CreateStartScripts) {
+   mainClassName = "kkdt.sample.webboot.CurrentTime"
+   applicationName = "currenttime"
+   defaultJvmOpts = ["-Dcurrent=Time"]
+   outputDir = new File(project.buildDir, 'scripts')
+   classpath = jar.outputs.files + project.configurations.runtime
+   doLast {
+      windowsScript.delete()
+   }
+}
+
+startScripts {
+   doLast {
+      windowsScript.delete()
+   }
+}
+
+applicationDistribution.into("bin") {
+   from(createHelloWorld)
+   from(createCurrentTime)
+   fileMode = 0755
+}
+
+task installDistCustom(type : Sync, description: 'Custom installation') {
+   into new File(project.buildDir, 'customInstall')
+}
+
+installDistCustom.into('bin') {
+   from(createHelloWorld)
+   from(createCurrentTime)
+   fileMode = 0755
+}
+
+installDistCustom.into('lib') {
+   from(jar.outputs.files)
+   from(project.configurations.runtime)
+   fileMode = 0755
+}
+
+task distTarCustom(type: Tar, description: 'Custom tar',dependsOn:['installDistCustom']) {
+   baseName = 'scripts'
+   destinationDir = new File(project.buildDir, 'distributions')
+   from(installDistCustom)
+   from(installDist)
 }
 
